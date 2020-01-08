@@ -11,7 +11,7 @@ namespace Mixer.Chat.Models
 
     public class WelcomeEventArgs : EventArgs
     {
-        public String Server { get; set; }
+        public string Server { get; set; }
     }
 
     public class UserJoinEventArgs : EventArgsBase<WsUserJoinEvent> { }

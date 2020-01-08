@@ -8,16 +8,16 @@ namespace Mixer.Chat.Security
     public class ChannelInfo
     {
         [JsonProperty("roles")]
-        public String[] Roles { get; set; }
+        public string[] Roles { get; set; }
         
         [JsonProperty("authkey")]
-        public String AuthKey { get; set; }
+        public string AuthKey { get; set; }
 
         [JsonProperty("permissions")]
-        public String[] Permissions { get; set; }
+        public string[] Permissions { get; set; }
 
         [JsonProperty("endpoints")]
-        public String[] EndPoints { get; set; }
+        public string[] EndPoints { get; set; }
 
         [JsonProperty("isLoadShed")]
         public Boolean IsLoadShed { get; set; }

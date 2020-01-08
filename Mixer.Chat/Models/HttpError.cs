@@ -8,8 +8,8 @@ namespace Mixer.Chat.Models
     public class HttpError
     {
         [JsonProperty("error")]
-        public String Error { get; set; }
+        public string Error { get; set; }
         [JsonProperty("error_description")]
-        public String ErrorDesciption { get; set; }
+        public string ErrorDesciption { get; set; }
     }
 }

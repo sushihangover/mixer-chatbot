@@ -27,7 +27,7 @@ namespace Mixer.Chat.Models
     internal class WsMethod : WsMessage
     {
         [JsonProperty("method")]
-        public String Method { get; set; }
+        public string Method { get; set; }
 
         [JsonProperty("arguments")]
         public Object[] Arguments { get; set; }
@@ -48,7 +48,7 @@ namespace Mixer.Chat.Models
     internal class WsReply<T> : WsMessage
     {
         [JsonProperty("error")]
-        public String Error { get; set; }
+        public string Error { get; set; }
 
         [JsonProperty("data")]
         public T Data { get; set; }

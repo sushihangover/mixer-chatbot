@@ -12,7 +12,7 @@ namespace Mixer.Chat.Models
         public Boolean Authenticated { get; set; }
 
         [JsonProperty("roles")]
-        public String[] Roles { get; set; }
+        public string[] Roles { get; set; }
     }
  
 }
