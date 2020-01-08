@@ -130,7 +130,8 @@ namespace Mixer.Chat
 
 		async void WriteLog(string json)
 		{
-			await streamWriter?.WriteLineAsync(json);
+			streamWriter?.WriteLine(json);
+			//await streamWriter?.WriteLineAsync(json);
 			//await streamWriter?.WriteLineAsync("\n");
 			//await streamWriter?.FlushAsync();
 		}
@@ -180,18 +181,21 @@ namespace Mixer.Chat
 				case WsMessageType.@event:
 					try
 					{
-						WriteLog(e.Messagestring);
+						// Need a timestamp, not in the original json
+						//WriteLog(e.Messagestring);
 						HandleSocketEvent(e);
 					}
 					catch (Exception ex)
 					{
 						Console.WriteLine($"Handle Event Exception - {ex.Message}");
+						Console.WriteLine($"{e.Messagestring}");
 					}
 					break;
 				case WsMessageType.reply:
 					try
 					{
-						WriteLog(e.Messagestring);
+						// Need a timestamp, not in the original json
+						//WriteLog(e.Messagestring);
 						HandleSocketReply(e);
 					}
 					catch (Exception ex)
@@ -209,10 +213,14 @@ namespace Mixer.Chat
 			{
 				case WsEventType.WelcomeEvent:
 					var welcomeEvent = JsonConvert.DeserializeObject<WsEvent<WsWelcomeEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(welcomeEvent));
 					this.WelcomeEvent?.Invoke(this, new WelcomeEventArgs() { Server = welcomeEvent.Data.Server });
 					break;
 				case WsEventType.UserJoin:
 					var userJoinEvent = JsonConvert.DeserializeObject<WsEvent<WsUserJoinEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(userJoinEvent));
 					this.UserJoinEvent?.Invoke(this, new UserJoinEventArgs()
 					{
 						EventData = userJoinEvent.Data
@@ -220,6 +228,8 @@ namespace Mixer.Chat
 					break;
 				case WsEventType.UserLeave:
 					var userLeaveEvent = JsonConvert.DeserializeObject<WsEvent<WsUserLeaveEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(userLeaveEvent));
 					this.UserLeaveEvent?.Invoke(this, new UserLeaveEventArgs()
 					{
 						EventData = userLeaveEvent.Data
@@ -227,6 +237,8 @@ namespace Mixer.Chat
 					break;
 				case WsEventType.ChatMessage:
 					var chatMessageEvent = JsonConvert.DeserializeObject<WsEvent<WsChatMessageEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(chatMessageEvent));
 					this.ChatMessageEvent?.Invoke(this, new ChatMessageEventArgs()
 					{
 						EventData = chatMessageEvent.Data
@@ -235,6 +247,8 @@ namespace Mixer.Chat
 
 				case WsEventType.PollStart:
 					var pollStartEvent = JsonConvert.DeserializeObject<WsEvent<WsPollStartEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(pollStartEvent));
 					this.PollStartEvent?.Invoke(this, new PollStartEventArgs()
 					{
 						EventData = pollStartEvent.Data
@@ -243,6 +257,8 @@ namespace Mixer.Chat
 
 				case WsEventType.PollEnd:
 					var pollEndEvent = JsonConvert.DeserializeObject<WsEvent<WsPollEndEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(pollEndEvent));
 					this.PollEndEvent?.Invoke(this, new PollEndEventArgs()
 					{
 						EventData = pollEndEvent.Data
@@ -251,6 +267,8 @@ namespace Mixer.Chat
 
 				case WsEventType.DeleteMessage:
 					var deleteMessageEvent = JsonConvert.DeserializeObject<WsEvent<WsDeleteMessageEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(deleteMessageEvent));
 					this.DeleteMessageEvent?.Invoke(this, new DeleteMessageEventArgs()
 					{
 						EventData = deleteMessageEvent.Data
@@ -259,6 +277,8 @@ namespace Mixer.Chat
 
 				case WsEventType.PurgeMessage:
 					var purgeMessageEvent = JsonConvert.DeserializeObject<WsEvent<WsPurgeMessageEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(purgeMessageEvent));
 					this.PurgeMessageEvent?.Invoke(this, new PurgeMessageEventArgs()
 					{
 						EventData = purgeMessageEvent.Data
@@ -267,6 +287,8 @@ namespace Mixer.Chat
 
 				case WsEventType.ClearMessages:
 					var clearMessagesEvent = JsonConvert.DeserializeObject<WsEvent<WsClearMessagesEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(clearMessagesEvent));
 					this.ClearMessagesEvent?.Invoke(this, new ClearMessagesEventArgs()
 					{
 						EventData = clearMessagesEvent.Data
@@ -275,6 +297,8 @@ namespace Mixer.Chat
 
 				case WsEventType.UserUpdate:
 					var userUpdateEvent = JsonConvert.DeserializeObject<WsEvent<WsUserUpdateEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(userUpdateEvent));
 					this.UserUpdateEvent?.Invoke(this, new UserUpdateEventArgs()
 					{
 						EventData = userUpdateEvent.Data
@@ -283,6 +307,8 @@ namespace Mixer.Chat
 
 				case WsEventType.UserTimeout:
 					var userTimeoutEvent = JsonConvert.DeserializeObject<WsEvent<WsUserTimeoutEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(userTimeoutEvent));
 					this.UserTimeoutEvent?.Invoke(this, new UserTimeoutEventArgs()
 					{
 						EventData = userTimeoutEvent.Data
@@ -291,6 +317,8 @@ namespace Mixer.Chat
 
 				case WsEventType.SkillAttribution:
 					var skillAttributionEvent = JsonConvert.DeserializeObject<WsEvent<WsSkillAttributionEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(skillAttributionEvent));
 					this.SkillAttributionEvent?.Invoke(this, new SkillAttributionEventArgs()
 					{
 						EventData = skillAttributionEvent.Data
@@ -299,6 +327,8 @@ namespace Mixer.Chat
 
 				case WsEventType.DeleteSkillAttribution:
 					var deleteSkillAttributionEvent = JsonConvert.DeserializeObject<WsEvent<WsDeleteSkillAttributionEvent>>(e.Messagestring);
+					if (streamWriter != null)
+						WriteLog(JsonConvert.SerializeObject(deleteSkillAttributionEvent));
 					this.DeleteSkillAttributionEvent?.Invoke(this, new DeleteSkillAttributionEventArgs()
 					{
 						EventData = deleteSkillAttributionEvent.Data

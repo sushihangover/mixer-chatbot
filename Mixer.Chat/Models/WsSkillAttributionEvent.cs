@@ -14,7 +14,7 @@ namespace Mixer.Chat.Models
 		[JsonProperty("user_id")]
 		public Int64 UserId { get; set; }
 		[JsonProperty("user_roles")]
-		public string UserRoles { get; set; }
+		public string[] UserRoles { get; set; }
 		[JsonProperty("user_level")]
 		public Int64 UserLevel { get; set; }
 		[JsonProperty("user_avatar")]
